@@ -48,7 +48,10 @@ public class UniLinksPlugin
 
   private UniLinksPlugin(Registrar registrar) {
     this.registrar = registrar;
-    handleIntent(registrar.context(), registrar.activity().getIntent(), true);
+    boolean initial = (registrar.activity().getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0;
+    if (initial) {
+      handleIntent(registrar.context(), registrar.activity().getIntent(), true);
+    }
   }
 
   private void handleIntent(Context context, Intent intent, Boolean initial) {
